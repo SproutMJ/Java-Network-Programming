@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Main {
+public class Server {
     public static void main(String[] args) {
         System.out.println("에코 서버입니다.");
 
