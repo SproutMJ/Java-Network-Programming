@@ -31,4 +31,40 @@ public class HelperMethods {
         }
         return message;
     }
+
+    public static void sendMessage(SocketChannel socketChannel, String message){
+        try {
+            ByteBuffer buf = ByteBuffer.allocate(message.length() + 1);
+            buf.put(message.getBytes());
+            buf.put((byte)0x00);
+            buf.flip();
+            while(buf.hasRemaining()) socketChannel.write(buf);
+            System.out.println("Sent: " + message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String receiveMessage(SocketChannel socketChannel){
+        try {
+            ByteBuffer buf = ByteBuffer.allocate(16);
+            String msg = "";
+            while(socketChannel.read(buf)>0){
+                char read = 0x00;
+                buf.flip();
+                while(buf.hasRemaining()){
+                    read = (char) buf.get();
+                    if(read == 0x00) break;
+                    msg+=read;
+                }
+                if(read == 0x00) break;
+                buf.clear();
+            }
+            return msg;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
 }

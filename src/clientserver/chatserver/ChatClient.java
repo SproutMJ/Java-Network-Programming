@@ -15,15 +15,18 @@ public class ChatClient {
             Scanner sc = new Scanner(System.in);
             while (true){
                 System.out.println("서버로 부터 대기중...");
-                System.out.println("서버: " + HelperMethods.receiveFixedMessage(socketChannel));
+                // System.out.println("서버: " + HelperMethods.receiveFixedMessage(socketChannel)); 고정길이
+                System.out.println("서버: " + HelperMethods.receiveMessage(socketChannel));
                 System.out.print(">>> ");
                 message = sc.nextLine();
 
                 if(message.equalsIgnoreCase("exit")){
-                    HelperMethods.sendFixedMessage(socketChannel, "클라이언트 종료");
+                    //HelperMethods.sendFixedMessage(socketChannel, "클라이언트 종료"); 고정길이
+                    HelperMethods.sendMessage(socketChannel, "클라이언트 종료");
                     break;
                 }
-                HelperMethods.sendFixedMessage(socketChannel, message);
+                // HelperMethods.sendFixedMessage(socketChannel, message); 고정길이
+                HelperMethods.sendMessage(socketChannel, message);
             }
 
         } catch (IOException e) {
